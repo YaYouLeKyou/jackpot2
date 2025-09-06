@@ -11,12 +11,14 @@ const emojiColors = {
 };
 
 let jackpotRules = {}; // Will be loaded from JSON
+let currentLanguage = 'en'; // Default language
 
 const slot1 = document.getElementById('slot1');
 const slot2 = document.getElementById('slot2');
 const slot3 = document.getElementById('slot3');
 const spinButton = document.getElementById('spinButton');
 const resultDisplay = document.getElementById('result');
+const languageSelector = document.getElementById('language');
 
 let spinning = false;
 const jackpotChance = 0.6; // 60% chance of a jackpot
@@ -27,18 +29,46 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('rules.json')
         .then(response => response.json())
         .then(data => {
-            jackpotRules = data;
-            // Populate initial beer emojis
-            slot1.textContent = '🍺';
-            slot2.textContent = '🍺';
-            slot3.textContent = '🍺';
+            jackpotRules = data; // Store the full rules object
+            setLanguage(currentLanguage); // Set initial language
             spinButton.addEventListener('click', spin);
+            languageSelector.addEventListener('change', (event) => {
+                setLanguage(event.target.value);
+            });
         })
         .catch(error => {
             console.error('Error loading jackpot rules:', error);
             resultDisplay.textContent = 'Error loading game. Please try again.';
         });
 });
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    // Update UI elements that are not part of jackpotRules
+    document.querySelector('h1').textContent = {
+        'en': 'Jackpot Drinking Game',
+        'fr': 'Jeu à Boire Jackpot',
+        'es': 'Juego de Beber Jackpot',
+        'it': 'Gioco a Bere Jackpot'
+    }[currentLanguage];
+    spinButton.textContent = {
+        'en': 'Spin',
+        'fr': 'Lancer',
+        'es': 'Girar',
+        'it': 'Gira'
+    }[currentLanguage];
+    resultDisplay.textContent = {
+        'en': 'Spin the wheel to start!',
+        'fr': 'Lance la roue pour commencer !',
+        'es': '¡Gira la rueda para empezar!',
+        'it': 'Gira la ruota per iniziare!'
+    }[currentLanguage];
+
+    // Re-initialize slots with beer emojis in the current language
+    slot1.textContent = '🍺';
+    slot2.textContent = '🍺';
+    slot3.textContent = '🍺';
+}
 
 function getRandomEmoji() {
     return emojis[Math.floor(Math.random() * emojis.length)];
@@ -107,7 +137,7 @@ function checkResult() {
 
     if (val1 === val2 && val2 === val3) {
         const jackpotKey = val1 + val2 + val3;
-        const rule = jackpotRules[jackpotKey];
+        const rule = jackpotRules[jackpotKey][currentLanguage]; // Access language-specific rule
         if (rule) {
             const winningEmoji = val1; // Get the winning emoji
             const emojiColor = emojiColors[winningEmoji]; // Get the color from mapping
@@ -123,11 +153,11 @@ function checkResult() {
         } else {
             resultDisplay.style.backgroundColor = '#f9f9f9'; // Reset to default
             resultDisplay.style.color = '#555'; // Reset to default
-            resultDisplay.textContent = `Jackpot! ${val1}${val2}${val3} - No specific rule defined for this combination. Drink!`;
+            resultDisplay.textContent = currentLanguage === 'en' ? `Jackpot! ${val1}${val2}${val3} - No specific rule defined for this combination. Drink!` : `Jackpot! ${val1}${val2}${val3} - Aucune règle spécifique définie pour cette combinaison. Bois !`;
         }
     } else {
         resultDisplay.style.backgroundColor = '#f9f9f9'; // Reset to default
         resultDisplay.style.color = '#555'; // Reset to default
-        resultDisplay.textContent = 'No jackpot. Spin again!';
+        resultDisplay.textContent = currentLanguage === 'en' ? 'No jackpot. Spin again!' : 'Pas de jackpot. Relance !';
     }
 }
