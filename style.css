@@ -1,0 +1,133 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #222;
+    /* Fallback background color */
+    color: #eee;
+    /* Light text color for contrast */
+    background-image: url('./img/casino3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Black transparent background */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+h1 {
+    color: #00ffff;
+    /* Cyan for 80s feel */
+    margin-bottom: 30px;
+    font-family: 'Press Start 2P', cursive;
+    /* 80s arcade font */
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff,
+        -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    /* Neon glow + More pronounced black border effect */
+    font-size: 2.5em;
+    /* Adjust size */
+    transition: color 0.5s ease-in-out;
+    /* Smooth color transition */
+}
+
+h1:hover {
+    color: #ff00ff;
+    /* Magenta on hover */
+}
+
+/* Import Google Font for retro style */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.slots {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.slot {
+    font-size: 4em;
+    padding: 20px;
+    border: 3px solid #ddd;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e9e9e9;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* Ensure only one emoji is visible */
+    line-height: 1;
+    /* Ensure single line for emoji */
+}
+
+.slot.spinning {
+    animation: spin-animation 0.1s infinite linear;
+}
+
+@keyframes spin-animation {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-10px);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.result {
+    margin-top: 30px;
+    font-size: 2em;
+    /* Bigger font size */
+    color: #555;
+    min-height: 100px;
+    /* Bigger min-height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    text-shadow: 1px 1px 2px black;
+    /* Tiny black border effect */
+}
