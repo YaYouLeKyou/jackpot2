@@ -19,6 +19,8 @@ const slot3 = document.getElementById('slot3');
 const spinButton = document.getElementById('spinButton');
 const resultDisplay = document.getElementById('result');
 const languageSelector = document.getElementById('language');
+const emojiRainContainer = document.getElementById('emoji-rain-container'); // Get the new container
+const emojiExplosionContainer = document.getElementById('emoji-explosion-container'); // Get the new explosion container
 
 let spinning = false;
 const jackpotChance = 0.6; // 60% chance of a jackpot
@@ -130,6 +132,55 @@ function spin() {
     }, intervalTime);
 }
 
+// Function for emoji rain effect
+function startEmojiRain(emoji, count) {
+    if (!emojiRainContainer) return; // Ensure the container exists
+
+    // Clear any existing emojis
+    emojiRainContainer.innerHTML = '';
+
+    for (let i = 0; i < count; i++) {
+        const emojiElement = document.createElement('div');
+        emojiElement.classList.add('falling-emoji');
+        emojiElement.textContent = emoji;
+        emojiElement.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+        emojiElement.style.animationDuration = `${Math.random() * 2 + 3}s`; // Random duration between 3 and 5 seconds
+        emojiElement.style.animationDelay = `${Math.random() * 0.5}s`; // Staggered start
+
+        emojiRainContainer.appendChild(emojiElement);
+
+        // Remove the element after its animation finishes to prevent DOM clutter
+        emojiElement.addEventListener('animationend', () => {
+            emojiElement.remove();
+        });
+    }
+}
+
+// New function for emoji explosion effect
+function triggerEmojiExplosion(emoji) {
+    if (!emojiExplosionContainer) return;
+
+    // Clear any existing explosion emojis
+    emojiExplosionContainer.innerHTML = '';
+
+    // Create a single large emoji for the explosion
+    const explosionEmoji = document.createElement('div');
+    explosionEmoji.classList.add('emoji-explosion');
+    explosionEmoji.textContent = emoji;
+
+    // Position it in the center of the screen
+    explosionEmoji.style.left = '50%';
+    explosionEmoji.style.top = '50%';
+
+    emojiExplosionContainer.appendChild(explosionEmoji);
+
+    // Remove the element after its animation finishes
+    explosionEmoji.addEventListener('animationend', () => {
+        explosionEmoji.remove();
+    });
+}
+
+
 function checkResult() {
     const val1 = slot1.textContent;
     const val2 = slot2.textContent;
@@ -150,6 +201,12 @@ function checkResult() {
             const messageText = messageParts.length > 1 ? messageParts[1] : messageParts[0];
 
             resultDisplay.innerHTML = `${val1}${val2}${val3}<br>${messageText}<br><br>${randomQuestion}`;
+
+            // Start the emoji rain!
+            startEmojiRain(winningEmoji, 50); // Rain 50 of the winning emoji
+
+            // Trigger the emoji explosion!
+            triggerEmojiExplosion(winningEmoji);
         } else {
             resultDisplay.style.backgroundColor = '#f9f9f9'; // Reset to default
             resultDisplay.style.color = '#555'; // Reset to default
@@ -158,6 +215,18 @@ function checkResult() {
     } else {
         resultDisplay.style.backgroundColor = '#f9f9f9'; // Reset to default
         resultDisplay.style.color = '#555'; // Reset to default
-        resultDisplay.textContent = currentLanguage === 'en' ? 'No jackpot. Spin again!' : 'Pas de jackpot. Relance !';
+        switch (currentLanguage) {
+            case 'fr':
+                resultDisplay.textContent = 'Pas de jackpot. Relance !';
+                break;
+            case 'es':
+                resultDisplay.textContent = 'No hay jackpot. ¡Gira de nuevo!';
+                break;
+            case 'it':
+                resultDisplay.textContent = 'Nessun jackpot. Gira di nuovo!';
+                break;
+            default:
+                resultDisplay.textContent = 'No jackpot. Spin again!';
+        }
     }
 }
