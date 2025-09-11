@@ -1,9 +1,15 @@
-html, body {
-    overflow: hidden; /* Ensures no scrollbars */
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Remove default paddings */
+html,
+body {
+    overflow: hidden;
+    /* Ensures no scrollbars */
+    width: 100vw;
+    /* Full viewport width */
+    height: 100vh;
+    /* Full viewport height */
+    margin: 0;
+    /* Remove default margins */
+    padding: 0;
+    /* Remove default paddings */
 }
 
 body {
@@ -27,7 +33,8 @@ body {
 /* Media query for mobile devices to handle background-attachment */
 @media (max-width: 768px) {
     body {
-        background-attachment: scroll; /* Change to scroll on mobile */
+        background-attachment: scroll;
+        /* Change to scroll on mobile */
     }
 }
 
@@ -89,6 +96,19 @@ h1:hover {
     /* Ensure single line for emoji */
 }
 
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .slot {
+        font-size: 3em;
+        /* Smaller font for mobile */
+        width: 70px;
+        /* Smaller width */
+        height: 70px;
+        /* Smaller height */
+        padding: 10px;
+    }
+}
+
 .slot.spinning {
     animation: spin-animation 0.1s infinite linear;
 }
@@ -137,7 +157,8 @@ button:active {
     color: #555;
     height: 200px;
     /* Fixed height to prevent container change */
-    overflow: hidden; /* Hide overflowing text */
+    overflow: hidden;
+    /* Hide overflowing text */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -152,10 +173,16 @@ button:active {
 /* Media query for mobile devices */
 @media (max-width: 768px) {
     .result {
-        height: 300px; /* Even bigger height for mobile */
-        font-size: 2em; /* Further reduced font size for mobile */
+        height: 300px;
+        height: 220px;
+        /* Even bigger height for mobile */
+        font-size: 2em;
+        font-size: 1.5em;
+        /* Further reduced font size for mobile */
     }
 }
+
+
 
 .emoji-rain-container {
     position: fixed;
@@ -163,31 +190,40 @@ button:active {
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Allows clicks to pass through */
+    pointer-events: none;
+    /* Allows clicks to pass through */
     overflow: hidden;
-    z-index: 9999; /* Ensure it's on top of other content */
+    z-index: 9999;
+    /* Ensure it's on top of other content */
 }
 
 .falling-emoji {
     position: absolute;
-    font-size: 2em; /* Adjust size as needed */
+    font-size: 2em;
+    /* Adjust size as needed */
     opacity: 0;
-    animation: fall 3s linear forwards; /* Animation duration and timing */
+    animation: fall 3s linear forwards;
+    /* Animation duration and timing */
 }
 
 @keyframes fall {
     0% {
-        transform: translateY(-10vh); /* Start above the viewport */
+        transform: translateY(-10vh);
+        /* Start above the viewport */
         opacity: 0;
     }
+
     10% {
         opacity: 1;
     }
+
     90% {
         opacity: 1;
     }
+
     100% {
-        transform: translateY(100vh); /* End below the viewport */
+        transform: translateY(100vh);
+        /* End below the viewport */
         opacity: 0;
     }
 }
@@ -198,18 +234,24 @@ button:active {
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Allows clicks to pass through */
+    pointer-events: none;
+    /* Allows clicks to pass through */
     overflow: hidden;
-    z-index: 10000; /* Ensure it's on top of everything */
+    z-index: 10000;
+    /* Ensure it's on top of everything */
 }
 
 .emoji-explosion {
     position: absolute;
-    font-size: 0em; /* Start small */
+    font-size: 0em;
+    /* Start small */
     opacity: 1;
-    transform: translate(-50%, -50%); /* Center the emoji */
-    animation: explode 0.7s ease-out forwards; /* Animation duration and timing */
-    z-index: 10000; /* Ensure it's on top of everything */
+    transform: translate(-50%, -50%);
+    /* Center the emoji */
+    animation: explode 0.7s ease-out forwards;
+    /* Animation duration and timing */
+    z-index: 10000;
+    /* Ensure it's on top of everything */
 }
 
 @keyframes explode {
@@ -218,13 +260,17 @@ button:active {
         opacity: 1;
         transform: translate(-50%, -50%) scale(0.1);
     }
+
     50% {
-        font-size: 8em; /* Zoom out */
+        font-size: 8em;
+        /* Zoom out */
         opacity: 0.8;
         transform: translate(-50%, -50%) scale(1.5);
     }
+
     100% {
-        font-size: 10em; /* Further zoom out */
+        font-size: 10em;
+        /* Further zoom out */
         opacity: 0;
         transform: translate(-50%, -50%) scale(2);
     }

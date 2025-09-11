@@ -23,7 +23,7 @@ const emojiRainContainer = document.getElementById('emoji-rain-container'); // G
 const emojiExplosionContainer = document.getElementById('emoji-explosion-container'); // Get the new explosion container
 
 let spinning = false;
-const jackpotChance = 0.6; // 60% chance of a jackpot
+const jackpotChance = 0.7; // 70% chance of a jackpot
 
 // Initialize slots with beer emojis on page load and attach event listener
 document.addEventListener('DOMContentLoaded', () => {
@@ -143,7 +143,18 @@ function startEmojiRain(emoji, count) {
         const emojiElement = document.createElement('div');
         emojiElement.classList.add('falling-emoji');
         emojiElement.textContent = emoji;
-        emojiElement.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+        // Adjust horizontal position based on screen size
+        if (window.innerWidth <= 768) { // Mobile breakpoint
+            // Distribute emojis within the center 80% of the screen on mobile
+            const minLeft = 5; // Start at 5% from left
+            const maxLeft = 85; // End at 85% from left
+            emojiElement.style.left = `${Math.random() * (maxLeft - minLeft) + minLeft}vw`;
+        } else {
+            // Distribute emojis within a more centered range for larger screens
+            const minLeft = 28; // Start at 28% from left
+            const maxLeft = 68; // End at 68% from left (40vw range)
+            emojiElement.style.left = `${Math.random() * (maxLeft - minLeft) + minLeft}vw`;
+        }
         emojiElement.style.animationDuration = `${Math.random() * 2 + 3}s`; // Random duration between 3 and 5 seconds
         emojiElement.style.animationDelay = `${Math.random() * 0.5}s`; // Staggered start
 
